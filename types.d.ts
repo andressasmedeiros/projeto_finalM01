@@ -23,3 +23,10 @@ export type ProdutoProps = {
   quantity: number;
   key: number;
 }
+
+export type UsuarioProps = {
+  id: number;
+  profile: string;
+  name: string;
+  status: boolean;
+}

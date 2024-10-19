@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { Alert, View, FlatList, Text, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
 import Produto from '../components/Produto';
 import { StyleSheet } from 'react-native';
 import axios from 'axios';
-import { NavigationProps, ProdutoProps } from '../../types';
+import { ProdutoProps } from '../../types';
 
 type TelaHomeNavigationProp = StackNavigationProp<RootStackParamList, 'TelaListagemProdutos'>;
 
@@ -18,7 +17,6 @@ const TelaListagemProdutos = () => {
     const handleProducts = async () => {
         try {
             const response = await axios.get('http://192.168.16.105:3000/products');
-            console.log(response.data)
             if (response.status === 200) {
                 const responseData = response.data;
                 for (var i = 0; i < responseData.length; i++) {

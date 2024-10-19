@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import TelaLogin from './src/screens/TelaLogin';
 import TelaHome from './src/screens/TelaHome';
 import TelaListagemProdutos from './src/screens/TelaListagemProdutos';
+import TelaListagemUsuarios from './src/screens/TelaListagemUsuarios';
 
 
 export type RootStackParamList = {
@@ -22,6 +23,7 @@ const App = () => {
         <Stack.Screen name="TelaLogin" component={TelaLogin} />
         <Stack.Screen name="TelaHome" component={TelaHome} />
         <Stack.Screen name="TelaListagemProdutos" component={TelaListagemProdutos} />
+        <Stack.Screen name="TelaListagemUsuarios" component={TelaListagemUsuarios} />
       </Stack.Navigator>
     </NavigationContainer>
   );
