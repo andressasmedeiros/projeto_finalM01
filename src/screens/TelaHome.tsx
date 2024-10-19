@@ -48,17 +48,11 @@ const TelaHome: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleProducts = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'TelaListagemProdutos' }],
-    });
+    navigation.navigate('TelaListagemProdutos');
   };
 
   const handleUsers = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'TelaListagemUsuarios' }],
-    });
+    navigation.navigate('TelaListagemUsuarios');
   };
 
   return (
