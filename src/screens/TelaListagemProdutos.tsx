@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 import axios from 'axios';
 import { ProdutoProps } from '../../types';
 
-type TelaHomeNavigationProp = StackNavigationProp<RootStackParamList, 'TelaListagemProdutos'>;
+type TelaListagemProdutosNavigationProp = StackNavigationProp<RootStackParamList, 'TelaListagemProdutos'>;
 
 const TelaListagemProdutos = () => {
     const [products, setProducts] = useState<ProdutoProps[]>([]);

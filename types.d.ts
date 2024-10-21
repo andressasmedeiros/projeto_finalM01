@@ -1,12 +1,6 @@
 // types.d.ts
 import { RouteProp } from '@react-navigation/native';
 
-export type RootParamList = {
-  TelaHome: undefined; // Defina a rota TelaHome
-  TelaLogin: undefined; // Defina a rota TelaLogin
-  // Adicione outras rotas aqui conforme necessário
-};
-
 export type NavigationProps = {
   navigation: {
     reset: (state: { index: number; routes: Array<{ name: keyof RootParamList }> }) => void;
@@ -22,11 +16,54 @@ export type ProdutoProps = {
   image_url: string;
   quantity: number;
   key: number;
-}
+};
 
 export type UsuarioProps = {
   id: number;
   profile: string;
   name: string;
   status: boolean;
+};
+
+export type CadastroProps = {
+  name: string;
+  document: string;
+  email: string;
+  full_address: string;
+  password: string;
+  setName: (value: string) => void;
+  setDocument: (value: string) => void;
+  setEmail: (value: string) => void;
+  setFullAddress: (value: string) => void;
+  setPassword: (value: string) => void;
+};
+
+interface Branch {
+  name: string;
+  id: number;
+};
+
+interface Product {
+  product_id: number;
+  branch_name: string;
+  products_name: string;
+  quantity: number;
+};
+
+export type MovimentacaoProps = {
+  origem: {
+    nome: string;
+    latitude: number;
+    longitude: number;
+  };
+  destino: {
+    nome: string;
+    latitude: number;
+    longitude: number;
+  };
+  produto: {
+    nome: string;
+    quantidade: number;
+  };
+  status: string;
 }

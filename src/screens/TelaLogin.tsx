@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import { NavigationProps } from '../../types'; 
+import { NavigationProps } from '../../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TelaLogin = () => {
@@ -16,12 +16,22 @@ const TelaLogin = () => {
         email,
         password,
       });
+      console.log(response)
 
       if (response.status === 200) {
-        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+        const user = response.data;
+        await AsyncStorage.setItem('user', JSON.stringify(user));
+        let tela = '';
+        if ("admin" === user.profile) {
+          tela = 'TelaHome';
+        } else if ("filial" === user.profile) {
+          tela = 'TelaListagemMovimentacao'
+        } else if ("motorista" === user.profile) {
+          tela = 'TelaMovimentacaoMotorista'
+        }
         navigation.reset({
           index: 0,
-          routes: [{ name: 'TelaHome'}],
+          routes: [{ name: tela }],
         });
       } else {
         Alert.alert('Login falhou', 'E-mail ou senha inválidos');
