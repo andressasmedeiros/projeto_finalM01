@@ -43,11 +43,8 @@ const TelaListagemUsuarios = () => {
     }, []);
 
     const handleCadastro = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'TelaCadastroUsuarios' }],
-        });
-    };
+        navigation.navigate('TelaCadastroUsuarios');
+      };
 
     return (
         <>
