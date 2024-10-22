@@ -14,8 +14,7 @@ interface Props {
     navigation: TelaListagemMovimentacaoNavigationProp;
 }
 
-const TelaListagemMovimentacao = () => {
-    const navigation = useNavigation<TelaListagemMovimentacaoNavigationProp>();
+const TelaListagemMovimentacao: React.FC<Props> = ({ navigation }) => {
     const [movements, setMovements] = useState<MovimentacaoProps[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -48,6 +47,13 @@ const TelaListagemMovimentacao = () => {
         navigation.navigate('TelaCadastroMovimentacao');
     };
 
+    const handleLogout = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'TelaLogin' }],
+        });
+    };
+
     return (
         <>
             {isLoading ? (
@@ -60,6 +66,9 @@ const TelaListagemMovimentacao = () => {
                     <View>
                         <Button title="Nova Movimentação" onPress={handleCadastro} />
                     </View>
+                    <View>
+                        <Button title="Logout" onPress={handleLogout} />
+                    </View>
 
                     <FlatList
                         data={movements}
@@ -70,9 +79,12 @@ const TelaListagemMovimentacao = () => {
                                 produto={item.produto}
                                 status={item.status}
                             />
+
                         )}
                     />
+
                 </View>
+
             )}
         </>
 

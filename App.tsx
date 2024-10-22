@@ -25,7 +25,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TelaListagemMovimentacao">
+      <Stack.Navigator initialRouteName="TelaHome">
         <Stack.Screen name="TelaLogin" component={TelaLogin} />
         <Stack.Screen name="TelaHome" component={TelaHome} />
         <Stack.Screen name="TelaListagemProdutos" component={TelaListagemProdutos} />

@@ -3,17 +3,12 @@ import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } fr
 import { Picker } from '@react-native-picker/picker';
 import Motorista from '../components/Motorista';
 import Filial from '../components/Filial';
-import { RootStackParamList } from '../../App';
-import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
-
-type TelaCadastroUsuariosNavigationProp = StackNavigationProp<RootStackParamList, 'TelaCadastroUsuarios'>;
 
 const TelaCadastroUsuarios = () => {
     const [selectedForm, setSelectedForm] = useState('motorista');
     const [loading, setLoading] = useState(false);
 
-    // Campos do formulário
     const [name, setName] = useState('');
     const [document, setDocument] = useState('');
     const [email, setEmail] = useState('');

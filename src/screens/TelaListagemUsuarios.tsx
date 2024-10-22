@@ -13,8 +13,7 @@ interface Props {
     navigation: TelaListagemUsuariosNavigationProp;
 }
 
-const TelaListagemUsuarios = () => {
-    const navigation = useNavigation<TelaListagemUsuariosNavigationProp>();
+const TelaListagemUsuarios: React.FC<Props> = ({ navigation }) => {
     const [users, setUsers] = useState<UsuarioProps[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 

@@ -3,10 +3,6 @@ import { Alert, Button, ScrollView, TextInput, Text, StyleSheet } from 'react-na
 import axios from 'axios';
 import { Branch, Product } from '../../types';
 import { Picker } from '@react-native-picker/picker';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../App';
-
-type TelaCadastroMovimentacaoNavigationProp = StackNavigationProp<RootStackParamList, 'TelaCadastroMovimentacao'>;
 
 const TelaCadastroMovimentacao = () => {
     const [originBranch, setOriginBranch] = useState<number | null>(null);
