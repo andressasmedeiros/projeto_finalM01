@@ -4,7 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 export type NavigationProps = {
   navigation: {
     reset: (state: { index: number; routes: Array<{ name: keyof RootParamList }> }) => void;
-    // Adicione outras propriedades de navegação conforme necessário
+    navigate: (name: keyof RootParamList, params?: any) => void;
   };
   route: RouteProp<RootParamList, keyof RootParamList>;
 };
@@ -46,24 +46,34 @@ interface Branch {
 interface Product {
   product_id: number;
   branch_name: string;
-  products_name: string;
+  product_name: string;
   quantity: number;
 };
 
+type Filial = {
+  nome: string;
+  latitude: number;
+  longitude: number;
+}
+
 export type MovimentacaoProps = {
-  origem: {
-    nome: string;
-    latitude: number;
-    longitude: number;
-  };
-  destino: {
-    nome: string;
-    latitude: number;
-    longitude: number;
-  };
+  origem: Filial;
+  destino: Filial;
   produto: {
     nome: string;
     quantidade: number;
+    imagem: string,
   };
   status: string;
-}
+};
+
+type HistoricoItem = {
+  id: number;
+  descricao: string;
+  data: string;
+  file: string;
+};
+
+export type MovimentacaoMotoristaProps = MovimentacaoProps & {
+  historico: HistoricoItem[];
+};
