@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { MovimentacaoProps } from "../../types";
 import { Button, View, Text, FlatList, Alert } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { printToFileAsync } from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 import Movimentacao from "../components/Movimentacao";
@@ -36,6 +37,67 @@ const TelaListagemMovimentacao: React.FC<Props> = ({ navigation }) => {
         }
     };
 
+    const mapStatus = (status:string) => {
+        if ('created' === status){
+            return 'Aguardando Coleta';
+        }
+        return status;
+    }
+
+    const html = `
+    <html>
+      <head>
+        <style>
+          table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Relatório de Movimentações</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Status</th>
+              <th>Origem</th>
+              <th>Destino</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${movements.map(item => `
+              <tr>
+                <td>${item.produto.nome}</td>
+                <td>${item.quantidade}</td>
+                <td>${mapStatus(item.status)}</td>
+                <td>${item.origem.nome}</td>
+                <td>${item.destino.nome}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </body>
+    </html>
+    `;
+
+  const generatePdf = async () => {
+    const file = await printToFileAsync({
+      html: html,
+      base64: false
+    });
+
+    await shareAsync(file.uri);
+  };
 
     useEffect(() => {
         handleMovements();
@@ -64,22 +126,30 @@ const TelaListagemMovimentacao: React.FC<Props> = ({ navigation }) => {
                     <View>
                         <Button title="Nova Movimentação" onPress={handleCadastro} />
                     </View>
-                    <View>
-                        <Button title="Logout" onPress={handleLogout} />
-                    </View>
 
                     <FlatList
                         data={movements}
                         renderItem={({ item }) => (
-                            <Movimentacao
-                                origem={item.origem}
-                                destino={item.destino}
-                                produto={item.produto}
-                                status={item.status}
-                            />
+                            <>
+                                <Movimentacao
+                                    origem={item.origem}
+                                    quantidade={item.quantidade}
+                                    destino={item.destino}
+                                    produto={item.produto}
+                                    status={mapStatus(item.status)}
+                                />
+                                <Text>_________________________________________________</Text>
+                            </>
 
                         )}
                     />
+
+                    <View>
+                        <Button title="Logout" onPress={handleLogout} />
+                    </View>
+                    <View>
+                        <Button title="Gerar Relatório PDF" onPress={generatePdf} />
+                    </View>
 
                 </View>
 

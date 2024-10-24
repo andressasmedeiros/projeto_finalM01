@@ -1,27 +1,25 @@
 import { useNavigation } from '@react-navigation/native';
 import { MovimentacaoMotoristaProps, NavigationProps } from '../../types';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
 import { Button, View, Text, Image, StyleSheet, FlatList } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 
 
-const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, origem, destino, produto, status, historico, quantidade }) => {
+const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, origem, destino, produto, status, historico, quantidade, atualizarLista }) => {
     const navigation = useNavigation<NavigationProps['navigation']>();
-    const [image, setImage] = useState<string | null>(null);
 
-    const pickImage = async () => {
+    const pickImage = async (isStart: boolean) => {
         const result = await ImagePicker.launchCameraAsync();
 
         if (!result.canceled) {
             const selectedImage = result.assets[0];
-            await uploadImage(selectedImage);
+            await uploadImage(selectedImage, isStart);
         }
     };
 
-    const uploadImage = async (image: ImagePicker.ImagePickerAsset) => {
+    const uploadImage = async (image: ImagePicker.ImagePickerAsset, isStart: boolean) => {
         const user = await AsyncStorage.getItem('user');
         const userData = JSON.parse(user || '{}');
         const formData = new FormData();
@@ -31,13 +29,13 @@ const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, orige
             name: image.fileName as string,
         });
         formData.append('motorista', userData.name);
-
-        axios.put(`http://192.168.16.105:3000/movements/${id}/start`, formData, {
+        const path = isStart ? 'start' : 'end';
+        axios.put(`http://192.168.16.105:3000/movements/${id}/${path}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
-            .then(response => console.log('Upload bem-sucedido', response.data))
+            .then(response => atualizarLista())
             .catch(error => console.log(error.toJSON()))
 
     };
@@ -58,8 +56,7 @@ const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, orige
                 data={historico}
                 renderItem={({ item }) => (
                     <Text>
-                        - {item.id} 
-                        - {item.descricao} 
+                        - {item.descricao}
                         - {item.data}
                     </Text>
                 )}
@@ -69,16 +66,14 @@ const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, orige
                 (
                     <View>
                         <Text>Aguardando Coleta</Text>
-                        <Button title="Iniciar Entrega" onPress={pickImage} />
-                        {image && <Image source={{ uri: image }} style={styles.image} />}
+                        <Button title="Iniciar Entrega" onPress={() => pickImage(true)} />
                         <Button title="Mapa" onPress={handleMapa} />
                     </View>
                 ) : null}
             {status === 'em transito' ?
                 (
                     <View>
-                        <Button title="Finalizar Entrega" onPress={pickImage} />
-                        {image && <Image source={{ uri: image }} style={styles.image} />}
+                        <Button title="Finalizar Entrega" onPress={() => pickImage(false)} />
                         <Button title="Mapa" onPress={handleMapa} />
                     </View>
                 ) : null}
