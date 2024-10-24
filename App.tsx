@@ -10,6 +10,7 @@ import TelaCadastroMovimentacao from './src/screens/TelaCadastroMovimentacao';
 import TelaListagemMovimentacao from './src/screens/TelaListagemMovimentacao';
 import TelaMovimentacaoMotorista from './src/screens/TelaMovimentacaoMotorista';
 import TelaMapa from './src/screens/TelaMapa';
+import { Filial } from './types';
 
 
 export type RootStackParamList = {
@@ -21,7 +22,7 @@ export type RootStackParamList = {
   TelaCadastroMovimentacao: undefined;
   TelaListagemMovimentacao: undefined;
   TelaMovimentacaoMotorista: undefined;
-  TelaMapa: undefined;
+  TelaMapa: {origem:Filial, destino:Filial};
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -29,10 +30,10 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TelaListagemMovimentacao">
+      <Stack.Navigator initialRouteName="TelaHome">
         <Stack.Screen name="TelaLogin" component={TelaLogin} />
-        <Stack.Screen name="TelaHome" component={TelaHome} />
-        <Stack.Screen name="TelaListagemProdutos" component={TelaListagemProdutos} />
+        <Stack.Screen name="TelaHome" component={TelaHome} options={{ title: 'Gerenciador' }} />
+        <Stack.Screen name="TelaListagemProdutos" component={TelaListagemProdutos}options={{ title: 'Produtos' }}/>
         <Stack.Screen name="TelaListagemUsuarios" component={TelaListagemUsuarios} />
         <Stack.Screen name="TelaCadastroUsuarios" component={TelaCadastroUsuarios} />
         <Stack.Screen name="TelaCadastroMovimentacao" component={TelaCadastroMovimentacao} />

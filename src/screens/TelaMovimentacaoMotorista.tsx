@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { MovimentacaoMotoristaProps, NavigationProps } from "../../types";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
-import { Alert, Button, FlatList, View, Text, Image, StyleSheet } from "react-native";
+import { Alert, Button, FlatList, View, Text} from "react-native";
 import MovimentacaoMotorista from "../components/MovimentacaoMotorista";
-
-type TelaMovimentacaoMotoristaUsuariosNavigationProp = StackNavigationProp<RootStackParamList, 'TelaMovimentacaoMotorista'>;
 
 const TelaMovimentacaoMotorista = () => {
     const navigation = useNavigation<NavigationProps['navigation']>();

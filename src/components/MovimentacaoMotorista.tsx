@@ -35,7 +35,7 @@ const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, orige
                 'Content-Type': 'multipart/form-data',
             },
         })
-            .then(response => atualizarLista())
+            .then(() => atualizarLista())
             .catch(error => console.log(error.toJSON()))
 
     };
