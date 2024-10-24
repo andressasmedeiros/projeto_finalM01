@@ -62,6 +62,8 @@ const TelaMovimentacaoMotorista = () => {
                         renderItem={({ item }) => (
                             <>
                                 <MovimentacaoMotorista
+                                    id={item.id}
+                                    quantidade={item.quantidade}
                                     origem={item.origem}
                                     historico={item.historico}
                                     destino={item.destino}

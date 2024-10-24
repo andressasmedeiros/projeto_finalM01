@@ -58,12 +58,12 @@ const TelaHome: React.FC<Props> = ({ navigation }) => {
   return (
     <>
       {isLoading ? (
-        <View>
+        <View style={styles.Container}>
           <Text>Carregando</Text>
         </View>
       ) : (
-        <View style={styles.container}>
-          <Header name={nomeUsuario} profile={perfilUsuario} />
+        <View style={styles.Container}>
+          <Header name={nomeUsuario}/>
           <View>
             <Text>ESTOQUE</Text>
             <Button title="Gerenciar" onPress={handleProducts} />
@@ -80,11 +80,11 @@ const TelaHome: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  Container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    padding: 16,
-    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#B0BEC5',
   },
 });
 

@@ -61,7 +61,6 @@ export type MovimentacaoProps = {
   destino: Filial;
   produto: {
     nome: string;
-    quantidade: number;
     imagem: string,
   };
   status: string;
@@ -75,5 +74,7 @@ type HistoricoItem = {
 };
 
 export type MovimentacaoMotoristaProps = MovimentacaoProps & {
+  id: number;
+  quantidade: number;
   historico: HistoricoItem[];
 };
