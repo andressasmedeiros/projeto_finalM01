@@ -2,7 +2,7 @@ import { View, Text} from 'react-native';
 import { MovimentacaoProps} from '../../types';
 
 
-const Movimentacao: React.FC<MovimentacaoProps> = ({ origem, destino, produto, status}) => {
+const Movimentacao: React.FC<MovimentacaoProps> = ({ origem, destino, produto, status, quantidade}) => {
 
 
 
@@ -10,8 +10,9 @@ const Movimentacao: React.FC<MovimentacaoProps> = ({ origem, destino, produto, s
       <View>
         <Text>{origem.nome}</Text>
         <Text>{origem.latitude}, {origem.longitude}</Text>
+        <Text>{destino.nome}</Text>
         <Text>{destino.latitude}, {origem.longitude}</Text>
-        <Text>{produto.nome}, {produto.quantidade}</Text>
+        <Text>{produto.nome}, {quantidade}</Text>
         <Text>{status}</Text>
       </View>
   );

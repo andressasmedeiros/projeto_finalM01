@@ -69,6 +69,7 @@ const TelaMovimentacaoMotorista = () => {
                                     destino={item.destino}
                                     produto={item.produto}
                                     status={item.status}
+                                    atualizarLista={handleMovements}
                                 />
                                 <Text>____________________________________________</Text>
                             </>

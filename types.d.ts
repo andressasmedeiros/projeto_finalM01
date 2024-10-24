@@ -25,6 +25,11 @@ export type UsuarioProps = {
   status: boolean;
 };
 
+export type LoginProps = {
+  profile: string;
+  name: string;
+};
+
 export type CadastroProps = {
   name: string;
   document: string;
@@ -59,9 +64,11 @@ type Filial = {
 export type MovimentacaoProps = {
   origem: Filial;
   destino: Filial;
+  quantidade: number;
   produto: {
     nome: string;
     imagem: string,
+    quantidade: number;
   };
   status: string;
 };
@@ -75,6 +82,7 @@ type HistoricoItem = {
 
 export type MovimentacaoMotoristaProps = MovimentacaoProps & {
   id: number;
-  quantidade: number;
   historico: HistoricoItem[];
+  atualizarLista: () => void;
 };
+
