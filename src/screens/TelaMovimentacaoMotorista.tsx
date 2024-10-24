@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
-import { MovimentacaoProps } from "../../types";
-import { Button, View, Text, FlatList, Alert } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { MovimentacaoMotoristaProps, NavigationProps } from "../../types";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
-import Movimentacao from "../components/Movimentacao";
+import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
+import { Alert, Button, FlatList, View, Text, Image, StyleSheet } from "react-native";
+import MovimentacaoMotorista from "../components/MovimentacaoMotorista";
 
+type TelaMovimentacaoMotoristaUsuariosNavigationProp = StackNavigationProp<RootStackParamList, 'TelaMovimentacaoMotorista'>;
 
-type TelaListagemMovimentacaoNavigationProp = StackNavigationProp<RootStackParamList, 'TelaListagemMovimentacao'>;
-
-interface Props {
-    navigation: TelaListagemMovimentacaoNavigationProp;
-}
-
-const TelaListagemMovimentacao: React.FC<Props> = ({ navigation }) => {
-    const [movements, setMovements] = useState<MovimentacaoProps[]>([]);
+const TelaMovimentacaoMotorista = () => {
+    const navigation = useNavigation<NavigationProps['navigation']>();
+    const [movements, setMovements] = useState<MovimentacaoMotoristaProps[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [status, requestPermission] = ImagePicker.useCameraPermissions();
 
     const handleMovements = async () => {
         try {
@@ -36,14 +34,10 @@ const TelaListagemMovimentacao: React.FC<Props> = ({ navigation }) => {
         }
     };
 
-
     useEffect(() => {
         handleMovements();
+        requestPermission();        
     }, []);
-
-    const handleCadastro = () => {
-        navigation.navigate('TelaCadastroMovimentacao');
-    };
 
     const handleLogout = () => {
         navigation.reset({
@@ -60,34 +54,34 @@ const TelaListagemMovimentacao: React.FC<Props> = ({ navigation }) => {
                 </View>
             ) : (
                 <View>
-
-                    <View>
-                        <Button title="Nova Movimentação" onPress={handleCadastro} />
-                    </View>
                     <View>
                         <Button title="Logout" onPress={handleLogout} />
                     </View>
-
                     <FlatList
                         data={movements}
                         renderItem={({ item }) => (
-                            <Movimentacao
-                                origem={item.origem}
-                                destino={item.destino}
-                                produto={item.produto}
-                                status={item.status}
-                            />
-
+                            <>
+                                <MovimentacaoMotorista
+                                    id={item.id}
+                                    quantidade={item.quantidade}
+                                    origem={item.origem}
+                                    historico={item.historico}
+                                    destino={item.destino}
+                                    produto={item.produto}
+                                    status={item.status}
+                                />
+                                <Text>____________________________________________</Text>
+                            </>
                         )}
                     />
-
                 </View>
 
             )}
         </>
 
     )
+};
+
+export default TelaMovimentacaoMotorista;
 
 
-}
-export default TelaListagemMovimentacao;

@@ -3,14 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 
 interface HeaderProps {
   name: string;
-  profile: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ name, profile }) => {
+const Header: React.FC<HeaderProps> = ({name}) => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>Bem-vindo, {name}!</Text>
-      <Text style={styles.subHeaderText}>Perfil: {profile}</Text>
+
     </View>
   );
 };
@@ -20,15 +19,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',
     padding: 20,
     alignItems: 'center',
+    borderBottomLeftRadius: 20,  
+    borderBottomRightRadius: 20, 
+    position: 'absolute',        
+    top: 0,                      
+    left: 0,                     
+    right: 0, 
   },
   headerText: {
     fontSize: 20,
-    fontWeight: 'bold',
-  },
-  subHeaderText: {
-    fontSize: 16,
-    color: 'gray',
-  },
+  }
 });
 
 export default Header;

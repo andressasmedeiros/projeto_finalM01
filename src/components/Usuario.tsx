@@ -12,7 +12,6 @@ const Usuario: React.FC<UsuarioProps> = ({ id, profile, name, status}) => {
   const toggleStatus = async () => {
     try {
       const response = await axios.patch(`http://192.168.16.105:3000/users/${id}/toggle-status`);
-      console.log(response)
       if (response.status === 200){
         setStatusUsuario(!statusUsuario);
       } else {

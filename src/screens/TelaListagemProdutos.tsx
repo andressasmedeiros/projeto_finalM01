@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, View, FlatList, Text, TextInput } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../App';
 import Produto from '../components/Produto';
 import { StyleSheet } from 'react-native';
 import axios from 'axios';
 import { ProdutoProps } from '../../types';
 
-type TelaListagemProdutosNavigationProp = StackNavigationProp<RootStackParamList, 'TelaListagemProdutos'>;
 
 const TelaListagemProdutos = () => {
     const [products, setProducts] = useState<ProdutoProps[]>([]);

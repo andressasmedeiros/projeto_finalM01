@@ -3,10 +3,6 @@ import { Alert, Button, ScrollView, TextInput, Text, StyleSheet } from 'react-na
 import axios from 'axios';
 import { Branch, Product } from '../../types';
 import { Picker } from '@react-native-picker/picker';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../App';
-
-type TelaCadastroMovimentacaoNavigationProp = StackNavigationProp<RootStackParamList, 'TelaCadastroMovimentacao'>;
 
 const TelaCadastroMovimentacao = () => {
     const [originBranch, setOriginBranch] = useState<number | null>(null);
@@ -28,11 +24,8 @@ const TelaCadastroMovimentacao = () => {
         try {
             const { data } = await axios.get('http://192.168.16.105:3000/branches/options', {
             });
-            console.log('Branches data:', data);
             if (Array.isArray(data)) {
                 setBranches(data);
-            } else {
-                console.error('Branches data is not an array');
             }
         } catch (error) {
             Alert.alert('Erro', 'Não foi possível carregar as filiais');
@@ -43,11 +36,8 @@ const TelaCadastroMovimentacao = () => {
         try {
             const { data } = await axios.get('http://192.168.16.105:3000/products/options', {
             });
-            console.log('Products data:', data);
             if (Array.isArray(data)) {
                 setProducts(data);
-            } else {
-                console.error('Products data is not an array');
             }
         } catch (error) {
             Alert.alert('Erro', 'Não foi possível carregar os produtos');
@@ -105,12 +95,10 @@ const TelaCadastroMovimentacao = () => {
                 setDestinationBranch(null);
                 setProductId(null);
                 setQuantity(0);
-            } else {
-                console.log(response.status);
+            } else {                
                 Alert.alert('Erro', response.data.error || 'Erro ao cadastrar movimentação');
             }
         } catch (error) {
-            console.log(error);
             Alert.alert('Erro', 'Erro ao realizar a movimentação.');
         }
     };
@@ -164,7 +152,7 @@ const TelaCadastroMovimentacao = () => {
 
                 {Array.isArray(products) && products.length > 0 ? (
                     getFilteredProducts().map((prod) => (
-                        <Picker.Item key={prod.product_id} label={prod.products_name} value={prod.product_id} />
+                        <Picker.Item key={prod.product_id} label={prod.product_name} value={prod.product_id} />
                     ))
                 ) : (
                     <Picker.Item label="Nenhum produto disponível" value={null} />
