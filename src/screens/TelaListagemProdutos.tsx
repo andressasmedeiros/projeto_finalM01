@@ -52,7 +52,7 @@ const TelaListagemProdutos = () => {
         keyboardType="default"
         value={searchTerm}
         onChangeText={setSearchTerm}
-        style={styles.searchInput} // Aplicando o estilo ao TextInput
+        style={styles.searchInput} 
       />
       <Text style={styles.productCount}>
         {filteredProducts.length} Produtos encontrados
@@ -76,14 +76,6 @@ const TelaListagemProdutos = () => {
             )}
         </>
     );
-
-
-
-
-
-
-
-
 }
 
 

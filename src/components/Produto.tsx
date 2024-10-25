@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: '#888',
-    marginTop: 5, // Espaço acima da descrição
-    textAlign: 'center', // Centraliza a descrição
+    marginTop: 5, 
+    textAlign: 'center',
   },
 });
 
