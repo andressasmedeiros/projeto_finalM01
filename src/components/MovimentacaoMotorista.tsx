@@ -1,11 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { MovimentacaoMotoristaProps, NavigationProps } from '../../types';
 import * as ImagePicker from 'expo-image-picker';
-import { Button, View, Text, Image, StyleSheet, FlatList } from "react-native";
+import { Button, View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-
-
 
 const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, origem, destino, produto, status, historico, quantidade, atualizarLista }) => {
     const navigation = useNavigation<NavigationProps['navigation']>();
@@ -36,63 +34,147 @@ const MovimentacaoMotorista: React.FC<MovimentacaoMotoristaProps> = ({ id, orige
             },
         })
             .then(() => atualizarLista())
-            .catch(error => console.log(error.toJSON()))
-
+            .catch(error => console.log(error.toJSON()));
     };
-
 
     const handleMapa = () => {
         navigation.navigate('TelaMapa', { origem, destino });
     };
 
-    return (
-        <View>
-            <Text>Origem: {origem.nome}</Text>
-            <Text>Destino: {destino.nome}</Text>
-            <Image source={{ uri: produto.imagem }} style={styles.image} />
-            <Text>{produto.nome}, {quantidade}</Text>
+    const renomearStatusHistorico = (descricao: string) => {
+        if (!descricao) {
+            return '';
+        }
+        return descricao.replace('created', 'Aguardando Coleta');
+    }
 
+    return (
+        <View style={styles.container}>
+            <Text style={styles.text}>Origem: {origem.nome}</Text>
+            <Text style={styles.text}>Destino: {destino.nome}</Text>
+            <View style={styles.imageContainer}>
+                <Image source={{ uri: produto.imagem }} style={styles.image} />
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.storeName}>Produto: {produto.nome}</Text>
+                <Text style={styles.quantityText}>Quantidade: {quantidade}</Text>
+            </View>
             <FlatList
+                style={styles.description}
                 data={historico}
                 renderItem={({ item }) => (
-                    <Text>
-                        - {item.descricao}
-                        - {item.data}
-                    </Text>
+                    <View style={styles.descriptionList}>
+                        <Text>
+                            - {renomearStatusHistorico(item.descricao)} - {item.data}
+                        </Text>
+                    </View>
                 )}
             />
 
-            {status === 'created' ?
-                (
-                    <View>
-                        <Text>Aguardando Coleta</Text>
-                        <Button title="Iniciar Entrega" onPress={() => pickImage(true)} />
-                        <Button title="Mapa" onPress={handleMapa} />
-                    </View>
-                ) : null}
-            {status === 'em transito' ?
-                (
-                    <View>
-                        <Button title="Finalizar Entrega" onPress={() => pickImage(false)} />
-                        <Button title="Mapa" onPress={handleMapa} />
-                    </View>
-                ) : null}
-
+            {status === 'created' ? (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => pickImage(true)} style={styles.button}>
+                        <Text style={styles.buttonText}>Iniciar Entrega</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleMapa}>
+                        <Text style={styles.buttonText}>Ver Rota</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : null}
+            {status === 'em transito' ? (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => pickImage(false)} style={styles.button}>
+                        <Text style={styles.buttonText}>Finalizar Entrega</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleMapa}>
+                        <Text style={styles.buttonText}>Ver Rota</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : null}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        backgroundColor: '#fff',
+        padding: 15,
+        marginVertical: 10,
+        borderRadius: 10,
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        elevation: 5,
         justifyContent: 'center',
     },
-    image: {
-        width: 200,
-        height: 200,
+    itemName: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        textAlign: 'center',
     },
-
+    button: {
+        backgroundColor: '#2E7D32',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginVertical: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '90%',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    text: {
+        fontSize: 16,
+        color: '#555',
+        marginBottom: 5,
+    },
+    imageContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    image: {
+        width: 150,
+        height: 150,
+        borderRadius: 10,
+    },
+    quantityText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '90%',
+        marginVertical: 5,
+    },
+    description: {
+        fontSize: 14,
+        color: '#888',
+        marginTop: 5,
+        textAlign: 'center',
+    },
+    storeName: {
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    descriptionList: {
+        borderColor: '#B0BEC5',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 3,
+        marginBottom: 5,
+    }
 });
 
 export default MovimentacaoMotorista;

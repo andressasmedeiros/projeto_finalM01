@@ -83,6 +83,7 @@ export const styles = StyleSheet.create({
     container: {
         backgroundColor: '#B0BEC5',
         padding: 10,
+        flex: 1,
     },
     searchInput: {
         backgroundColor: '#fff',
