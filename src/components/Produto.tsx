@@ -7,21 +7,19 @@ const Produto: React.FC<ProdutoProps> = ({ product_name, image_url, branch_name,
   return (
     <View style={styles.itemContainer}>
       <Image source={{ uri: image_url }} style={styles.image} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.itemName}>{product_name}</Text>
-        <Text style={styles.itemName}>{branch_name}</Text>
-        <Text style={styles.itemName}>{description}</Text>
-      </View>
-      <View style={styles.quantityText}>
+      <Text style={styles.itemName}>{product_name}</Text>
+      <View style={styles.row}>
+        <Text style={styles.storeName}>{branch_name}</Text>
         <Text style={styles.quantityText}>{quantity} unidades</Text>
       </View>
+      <Text style={styles.description}>{description}</Text>
     </View>
   );
+  
 };
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flexDirection: 'row',
     backgroundColor: '#fff',
     padding: 10,
     marginVertical: 5,
@@ -34,29 +32,36 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 150, 
+    height: 150, 
     borderRadius: 10,
-    marginRight: 10,
-  },
-  infoContainer: {
-    flex: 1,
+    marginBottom: 10, 
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 5, 
+    textAlign: 'center', 
   },
-  itemPrice: {
+  row: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    width: '70%', 
+    marginVertical: 5, 
+  },
+  storeName: {
     fontSize: 14,
-    color: '#888',
-  },
-  buttonText: {
-    fontSize: 16,
     fontWeight: 'bold',
   },
   quantityText: {
-    marginHorizontal: 10,
-    fontSize: 16,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 14,
+    color: '#888',
+    marginTop: 5, // Espaço acima da descrição
+    textAlign: 'center', // Centraliza a descrição
   },
 });
 

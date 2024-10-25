@@ -33,9 +33,9 @@ const App = () => {
       <Stack.Navigator initialRouteName="TelaHome">
         <Stack.Screen name="TelaLogin" component={TelaLogin} />
         <Stack.Screen name="TelaHome" component={TelaHome} options={{ title: 'Gerenciador' }} />
-        <Stack.Screen name="TelaListagemProdutos" component={TelaListagemProdutos}options={{ title: 'Produtos' }}/>
-        <Stack.Screen name="TelaListagemUsuarios" component={TelaListagemUsuarios} />
-        <Stack.Screen name="TelaCadastroUsuarios" component={TelaCadastroUsuarios} />
+        <Stack.Screen name="TelaListagemProdutos" component={TelaListagemProdutos} options={{ title: 'Produtos' }}/>
+        <Stack.Screen name="TelaListagemUsuarios" component={TelaListagemUsuarios} options={{ title: 'Usuários' }}/>
+        <Stack.Screen name="TelaCadastroUsuarios" component={TelaCadastroUsuarios} options={{ title: 'Cadastro' }}/>
         <Stack.Screen name="TelaCadastroMovimentacao" component={TelaCadastroMovimentacao} />
         <Stack.Screen name="TelaListagemMovimentacao" component={TelaListagemMovimentacao} />
         <Stack.Screen name="TelaMovimentacaoMotorista" component={TelaMovimentacaoMotorista} />

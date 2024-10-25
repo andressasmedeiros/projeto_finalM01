@@ -45,16 +45,18 @@ const TelaListagemProdutos = () => {
                     <Text>Carregando</Text>
                 </View>
             ) : (
-                <View>
+                <View style={styles.container}>
                     <TextInput
-                        placeholder="Buscar produtos ou loja..."
-                        autoCapitalize="sentences"
-                        keyboardType="default"
-                        value={searchTerm}
-                        onChangeText={setSearchTerm}
-                    />
-
-                    <Text>{filteredProducts.length} Produtos encontrados</Text>
+        placeholder="Buscar produtos ou loja..."
+        autoCapitalize="sentences"
+        keyboardType="default"
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+        style={styles.searchInput} // Aplicando o estilo ao TextInput
+      />
+      <Text style={styles.productCount}>
+        {filteredProducts.length} Produtos encontrados
+      </Text>
 
                     <FlatList
                         data={filteredProducts}
@@ -86,7 +88,27 @@ const TelaListagemProdutos = () => {
 
 
 export const styles = StyleSheet.create({
-    container: {}
+    container: {
+        backgroundColor: '#B0BEC5',
+        padding: 10,
+    },
+    searchInput: {
+        backgroundColor: '#fff',
+        borderRadius: 10, 
+        padding: 10, 
+        fontSize: 16, 
+        marginBottom: 10, 
+        elevation: 2, 
+        shadowColor: '#000',
+        shadowOpacity: 0.1, 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowRadius: 4,
+      },
+      productCount: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
+      },
 });
 
 export default TelaListagemProdutos;
