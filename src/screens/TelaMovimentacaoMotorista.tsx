@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { MovimentacaoMotoristaProps, NavigationProps } from "../../types";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
-import { Alert, Button, FlatList, View, Text, Image, StyleSheet } from "react-native";
+import { Alert, StyleSheet, FlatList, View, Text, TouchableOpacity } from "react-native";
 import MovimentacaoMotorista from "../components/MovimentacaoMotorista";
-
-type TelaMovimentacaoMotoristaUsuariosNavigationProp = StackNavigationProp<RootStackParamList, 'TelaMovimentacaoMotorista'>;
 
 const TelaMovimentacaoMotorista = () => {
     const navigation = useNavigation<NavigationProps['navigation']>();
@@ -36,7 +32,7 @@ const TelaMovimentacaoMotorista = () => {
 
     useEffect(() => {
         handleMovements();
-        requestPermission();        
+        requestPermission();
     }, []);
 
     const handleLogout = () => {
@@ -53,10 +49,7 @@ const TelaMovimentacaoMotorista = () => {
                     <Text>Carregando</Text>
                 </View>
             ) : (
-                <View>
-                    <View>
-                        <Button title="Logout" onPress={handleLogout} />
-                    </View>
+                <View style={styles.container}>
                     <FlatList
                         data={movements}
                         renderItem={({ item }) => (
@@ -71,10 +64,14 @@ const TelaMovimentacaoMotorista = () => {
                                     status={item.status}
                                     atualizarLista={handleMovements}
                                 />
-                                <Text>____________________________________________</Text>
                             </>
                         )}
                     />
+                    <View style={styles.footerButtons}>
+                        <TouchableOpacity style={styles.buttonLogout} onPress={handleLogout}>
+                            <Text style={styles.buttonLogoutText}>Sair</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
             )}
@@ -82,6 +79,29 @@ const TelaMovimentacaoMotorista = () => {
 
     )
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#B0BEC5',
+    },
+    buttonLogout: {
+        marginTop: 20,
+    },
+    buttonLogoutText: {
+        color: '#2E7D32',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    footerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: -15, 
+        paddingVertical: 10,
+      },
+});
 
 export default TelaMovimentacaoMotorista;
 

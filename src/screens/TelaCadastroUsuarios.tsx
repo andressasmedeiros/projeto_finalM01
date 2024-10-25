@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Alert, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import Motorista from '../components/Motorista';
-import Filial from '../components/Filial';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const TelaCadastroUsuarios = () => {
     const [selectedForm, setSelectedForm] = useState('motorista');
@@ -14,6 +13,7 @@ const TelaCadastroUsuarios = () => {
     const [email, setEmail] = useState('');
     const [full_address, setFullAddress] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
         setName('');
@@ -26,6 +26,10 @@ const TelaCadastroUsuarios = () => {
     const validateForm = () => {
         if (!name || !document || !email || !full_address || !password) {
             Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+            return false;
+        }
+        if (password !== confirmPassword) {
+            Alert.alert('Erro', 'As senhas não coincidem.');
             return false;
         }
         return true;
@@ -53,6 +57,7 @@ const TelaCadastroUsuarios = () => {
                 setEmail('');
                 setFullAddress('');
                 setPassword('');
+                setConfirmPassword('');
             })
             .catch((error) => {
                 console.error(error);
@@ -65,55 +70,80 @@ const TelaCadastroUsuarios = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Selecione o Tipo de Cadastro:</Text>
+            <View style={styles.form}>
+                <Text style={styles.title}>Selecione o perfil:</Text>
 
-            <Picker
-                selectedValue={selectedForm}
-                style={styles.picker}
-                onValueChange={(itemValue) => setSelectedForm(itemValue)}
-            >
-                <Picker.Item label="Selecione uma opção" value="" />
-                <Picker.Item label="Motorista" value="motorista" />
-                <Picker.Item label="Filial" value="filial" />
-            </Picker>
+                <Picker
+                    selectedValue={selectedForm}
+                    style={styles.picker}
+                    onValueChange={(itemValue) => setSelectedForm(itemValue)}
+                >
+                    <Picker.Item label="Motorista" value="motorista" />
+                    <Picker.Item label="Filial" value="filial" />
+                </Picker>
 
-            {selectedForm === 'motorista' && (
-                <Motorista
-                    name={name}
-                    document={document}
-                    email={email}
-                    full_address={full_address}
-                    password={password}
-                    setName={setName}
-                    setDocument={setDocument}
-                    setEmail={setEmail}
-                    setFullAddress={setFullAddress}
-                    setPassword={setPassword}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nome completo"
+                    value={name}
+                    onChangeText={setName}
                 />
-            )}
-            {selectedForm === 'filial' && (
-                <Filial
-                    name={name}
-                    document={document}
-                    email={email}
-                    full_address={full_address}
-                    password={password}
-                    setName={setName}
-                    setDocument={setDocument}
-                    setEmail={setEmail}
-                    setFullAddress={setFullAddress}
-                    setPassword={setPassword}
+                {selectedForm === 'motorista' ? (
+                    <TextInput
+                        style={styles.input}
+                        placeholder="CPF"
+                        value={document}
+                        onChangeText={setDocument}
+                    />
+                ) : (
+                    <TextInput
+                        style={styles.input}
+                        placeholder="CNPJ"
+                        value={document}
+                        onChangeText={setDocument}
+                    />
+                )}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Endereço completo"
+                    value={full_address}
+                    onChangeText={setFullAddress}
                 />
-            )}
+                <View style={styles.loginHeader}>
+                    <Icon name="user" size={20} color="#333" style={styles.icon} />
+                    <Text style={styles.loginText}>Dados de Login</Text>
+                </View>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Senha"
+                    value={password}
+                    secureTextEntry
+                    onChangeText={setPassword}
+                />
 
-            <View style={styles.submitButton}>
-                <TouchableOpacity onPress={handleSubmit} disabled={loading}>
-                    {loading ? (
-                        <ActivityIndicator />
-                    ) : (
-                        <Text style={styles.submitText}>Cadastrar</Text>
-                    )}
-                </TouchableOpacity>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Confirmar Senha"
+                    value={confirmPassword}
+                    secureTextEntry
+                    onChangeText={setConfirmPassword}
+                />
+
+                <View style={styles.submitButton}>
+                    <TouchableOpacity onPress={handleSubmit} disabled={loading}>
+                        {loading ? (
+                            <ActivityIndicator />
+                        ) : (
+                            <Text style={styles.submitText}>Cadastrar</Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -122,8 +152,19 @@ const TelaCadastroUsuarios = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#B0BEC5',
+        justifyContent: 'center',
+        padding: 5,
+    },
+    form: {
+        flex: 1,
         padding: 20,
         justifyContent: 'center',
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        margin: 20,
     },
     title: {
         fontSize: 18,
@@ -136,7 +177,7 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         marginTop: 20,
-        backgroundColor: '#007BFF',
+        backgroundColor: '#2E7D32',
         padding: 15,
         borderRadius: 5,
     },
@@ -144,6 +185,27 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
         fontWeight: 'bold',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#000',
+        padding: 10,
+        marginBottom: 20,
+        borderRadius: 20,
+    },
+    loginHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    loginText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        marginLeft: 5,
+    },
+    icon: {
+        marginRight: 5,
     },
 });
 

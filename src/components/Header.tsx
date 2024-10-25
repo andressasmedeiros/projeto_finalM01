@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 interface HeaderProps {
   name: string;
@@ -8,8 +8,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({name}) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerText}>Bem-vindo, {name}!</Text>
-
+      <Image source={require('../../assets/perfil2.jpeg')}style={styles.profileImage}/>
+      <Text style={styles.headerText}>Olá, {name}!</Text>      
     </View>
   );
 };
@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({name}) => {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#f8f8f8',
+    flexDirection: 'row',
     padding: 20,
     alignItems: 'center',
     borderBottomLeftRadius: 20,  
@@ -28,7 +29,13 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-  }
+    marginLeft: 20,
+  },
+  profileImage: {
+    width: 80, 
+    height: 80, 
+    borderRadius: 15,
+  },
 });
 
 export default Header;
