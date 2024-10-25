@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MovimentacaoProps } from "../../types";
-import { Button, View, Text, FlatList, Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import { StackNavigationProp } from "@react-navigation/stack";

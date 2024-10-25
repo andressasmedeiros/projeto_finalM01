@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { MovimentacaoMotoristaProps, NavigationProps } from '../../types';
 import * as ImagePicker from 'expo-image-picker';
-import { Button, View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
