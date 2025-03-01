@@ -38,9 +38,5 @@ Para utilizar o aplicativo:
 - Filtragem de produtos por filial, tornando o processo de cadastro de movimentações mais preciso.
 - Botão para gerar relatórios em PDF das movimentações, que podem ser facilmente compartilhados e armazenados.
 
-## Links para acesso ao vídeo da apresentação e quadro do Trello
-- **Vídeo**: [Link para o vídeo](https://drive.google.com/file/d/1GiC--Kt-EZtUVGl6o52ukoQVFfbARI7T/view?usp=sharing)
-- **Quadro**: [Link para o Trello](https://trello.com/b/nFrGU2IR/projeto-final-m01) - onde você pode acompanhar o progresso e as tarefas organizadas do projeto.
-
 ---
 
