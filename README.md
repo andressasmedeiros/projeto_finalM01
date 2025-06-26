@@ -14,7 +14,7 @@ A solução visa facilitar a logística de transporte interno de mercadorias ent
 - Cadastro e movimentação de mercadorias entre filiais
 - Gerenciamento de estoque e usuários
 - Acesso ao mapa e câmera dentro do próprio aplicativo
-- Acompoanhamento das entregas pelos motoristas
+- Acompanhamento das entregas pelos motoristas
 - Filtragem de produtos por filial na tela de movimentação
 - Geração de relatórios em PDF contendo informações detalhadas, como:
   - Produtos movimentados
